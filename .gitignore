@@ -1,0 +1,12 @@
+﻿.env
+.env.*
+!.env.example
+*.sql
+*.bak
+*.zip
+*.rar
+
+api/instalar.php
+
+
+/api/actualizar.php

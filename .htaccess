@@ -1,0 +1,4 @@
+Options -Indexes
+<FilesMatch "^(conexion\.php|control_equipos_db\.sql|MIGRACION_CONTROL_EQUIX\.sql|README.*|API_ENDPOINTS\.txt|\.env)$">
+    Require all denied
+</FilesMatch>

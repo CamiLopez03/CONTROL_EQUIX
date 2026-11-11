@@ -1,0 +1,39 @@
+CONTROL_EQUIX — API PHP + MYSQL
+================================
+Todos los endpoints usan JSON y sesión PHP del mismo dominio.
+
+GET  api/health.php
+GET  api/actualizar.php           Migración local: crea equipo_imagenes sin modificar datos existentes.
+GET  api/auth.php?action=me
+POST api/auth.php?action=login       {"email":"...","password":"..."}
+POST api/auth.php?action=logout      {}
+GET  api/bootstrap.php
+
+GET    api/equipos.php?buscar=&tipo=&estado=&ubicacion=
+POST   api/equipos.php                {"codigo":"...","nombre":"...","tipo":"...","ubicacion":"...","estado":"Disponible","imagen_ruta":"https://...","imagen_base64":"...","accesorios":["..."]}
+PUT    api/equipos.php                mismos campos + codigo_original
+DELETE api/equipos.php?codigo=...     Retira el equipo y conserva el historial.
+GET    api/imagen.php?codigo=CAM-014  Devuelve una fotografía guardada como BLOB en MySQL (requiere sesión).
+
+GET    api/usuarios.php
+POST   api/usuarios.php                 {"nombre":"...","correo":"...","rol":"Solicitante","password":"..."}
+
+GET  api/reservas.php
+POST api/reservas.php?action=crear    {"equipo_codigos":["CAM-014"],"proposito":"...","fecha_inicio":"2026-11-10T09:00","fecha_fin":"2026-11-10T12:00"}
+POST api/reservas.php?action=aprobar  {"codigo":"RES-..."}
+POST api/reservas.php?action=rechazar {"codigo":"RES-...","motivo":"..."}
+
+GET  api/prestamos.php
+POST api/prestamos.php?action=entregar {"reserva_codigo":"RES-...","fecha_entrega":"2026-11-10T09:00","condicion_inicial":"...","accesorios_entregados":["Cable HDMI"]}
+POST api/prestamos.php?action=devolver {"prestamo_codigo":"PRE-...","fecha_retorno_real":"2026-11-10T12:00","condicion_final":"Conforme","accesorios_devuelto":["Cable HDMI"],"danos":"","notas":""}
+
+GET  api/seguimiento.php?equipo=CAM-014
+POST api/seguimiento.php              {"equipo_codigo":"CAM-014","fecha":"2026-11-10T12:00","diagnostico":"...","accion":"...","resultado":"...","estado_resultante":"Disponible"}
+GET  api/notificaciones.php
+POST api/notificaciones.php           {"id":1}
+
+IMAGENES
+--------
+- URL externa: se guarda en equipos.imagen_ruta.
+- Archivo cargado desde el computador: se guarda como BLOB en equipo_imagenes.contenido.
+- Formatos permitidos: JPG, PNG y WEBP. Tamaño máximo: 4 MB.
